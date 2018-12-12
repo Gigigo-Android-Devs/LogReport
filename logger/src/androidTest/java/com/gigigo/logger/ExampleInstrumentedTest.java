@@ -1,4 +1,4 @@
-package com.alavpa.logger;
+package com.gigigo.logger;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

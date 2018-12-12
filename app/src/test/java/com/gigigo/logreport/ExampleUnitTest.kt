@@ -1,4 +1,4 @@
-package com.alavpa.logreport
+package com.gigigo.logreport
 
 import org.junit.Test
 

@@ -1,7 +1,7 @@
-package com.alavpa.logreport
+package com.gigigo.logreport
 
 import android.os.Bundle
-import com.alavpa.logger.Logger
+import com.gigigo.logger.Logger
 
 class MainActivity : BaseActivity() {
 
