@@ -11,6 +11,8 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
 
     private var backupList = mutableListOf<LogMessage>()
     private var list = mutableListOf<LogMessage>()
+    private var typeFilter: MessageType? = null
+    private var queryFilter: CharSequence = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -44,26 +46,42 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
         }
     }
 
-    fun filterBy(typePosition: Int) {
-        val filter = try {
+    fun filterByType(typePosition: Int) {
+        typeFilter = try {
             MessageType.values()[typePosition.toString().toInt()]
         } catch (error: NumberFormatException) {
+            list.addAll(backupList)
             MessageType.VERBOSE
-            list = backupList
         }
 
+        applyFilters()
+    }
+
+    fun filterByText(query: String?) {
+        query?.let {
+            queryFilter = query
+            applyFilters()
+        }
+    }
+
+    private fun applyFilters() {
         list.apply {
             clear()
             addAll(backupList.filter {
-                when (filter) {
-                    VERBOSE -> true
-                    else -> it.type == filter
-                }
+                applyTypeFilter(it) and applyTextFilter(it)
             })
         }
 
         notifyDataSetChanged()
     }
+
+    private fun applyTypeFilter(logMessage: LogMessage): Boolean = when (typeFilter) {
+        VERBOSE -> true
+        else -> logMessage.type == typeFilter
+    }
+
+    private fun applyTextFilter(logMessage: LogMessage): Boolean =
+        logMessage.message.contains(queryFilter, true)
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val logTextView = view.findViewById<TextView>(R.id.logTextView)

@@ -4,8 +4,16 @@
 
   <item
       android:id="@+id/menu_filter_spinner"
+      android:title="Filter"
       app:actionViewClass="android.widget.Spinner"
       app:showAsAction="always"
-      android:title="Filter"/>
+      />
+
+  <item
+      android:id="@+id/menu_filter_search"
+      android:icon="@android:drawable/ic_menu_search"
+      android:title="Search"
+      app:actionViewClass="android.support.v7.widget.SearchView"
+      app:showAsAction="always|collapseActionView"/>
 
 </menu>

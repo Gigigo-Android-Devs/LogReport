@@ -3,6 +3,8 @@ package com.gigigo.logger
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
+import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -26,6 +28,7 @@ class LogActivity : AppCompatActivity() {
     private val logAdapter = LogAdapter()
     private val compositeDisposable = CompositeDisposable()
     private var menuFilterSpinner: MenuItem? = null
+    private var menuFilterSearch: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +66,8 @@ class LogActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.log_menu, menu)
         menuFilterSpinner = menu?.findItem(R.id.menu_filter_spinner)
         setupSpinner(menuFilterSpinner)
+        menuFilterSearch = menu?.findItem(R.id.menu_filter_search)
+        setupSearch(menuFilterSearch)
         return true
     }
 
@@ -97,6 +102,7 @@ class LogActivity : AppCompatActivity() {
                     )
                     view.onItemSelectedListener = object : OnItemSelectedListener {
                         override fun onNothingSelected(parent: AdapterView<*>?) {
+                            logAdapter.filterByType(0)
                         }
 
                         override fun onItemSelected(
@@ -105,9 +111,33 @@ class LogActivity : AppCompatActivity() {
                             position: Int,
                             id: Long
                         ) {
-                            logAdapter.filterBy(position)
+                            logAdapter.filterByType(position)
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private fun setupSearch(item: MenuItem?) {
+        item?.let {
+            val view = it.actionView
+            when (view) {
+                is SearchView -> {
+                    view.setOnQueryTextListener(object: OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String?): Boolean {
+                            logAdapter.filterByText(query)
+                            return true
+                        }
+
+                        override fun onQueryTextChange(newText: String?): Boolean {
+                            if(newText.isNullOrEmpty()) {
+                                logAdapter.filterByText("")
+                                return true
+                            }
+                            return false
+                        }
+                    })
                 }
             }
         }
