@@ -1,4 +1,4 @@
-package com.alavpa.logger
+package com.gigigo.logger
 
 import android.app.Activity
 import android.content.Intent

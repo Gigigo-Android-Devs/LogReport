@@ -1,4 +1,4 @@
-package com.alavpa.logger;
+package com.gigigo.logger;
 
 import org.junit.Test;
 
