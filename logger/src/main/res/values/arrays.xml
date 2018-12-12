@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <array name="filter_spinner_data">
+    <item>Verbose</item>
+    <item>Info</item>
+    <item>Debug</item>
+    <item>Warning</item>
+    <item>Error</item>
+  </array>
+</resources>

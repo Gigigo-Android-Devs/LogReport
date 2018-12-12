@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.alavpa.logger">
+    package="com.gigigo.logger">
 
     <application>
         <activity
-            android:name=".LogActivity" />
+            android:name="com.gigigo.logger.LogActivity" />
     </application>
 </manifest>
